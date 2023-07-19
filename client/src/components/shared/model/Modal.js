@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {useSelector} from "react-redux";
 import InputType from './../Form/InputType';
 import API from './../../../services/API';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const Modal = () => {
   const [inventoryType, setInventoryType] = useState("in");
@@ -28,8 +28,10 @@ const Modal = () => {
       })
       if(data?.success){
         alert('New Record account');
+        // window.location.reload();
       }
     } catch (error) {
+      // window.location.reload();
       console.log(error)
     }
   }
@@ -92,7 +94,7 @@ const Modal = () => {
               aria-label="Default select example"
               onChange={(e) => setBloodGroup(e.target.value)}
             >
-              <option selected>Open this select menu</option>
+              <option defaultValue={'Open this select menu'}>Open this select menu</option>
               <option value={"O+"}>O+</option>
               <option value={"O-"}>O-</option>
               <option value={"AB+"}>AB+</option>
@@ -108,7 +110,7 @@ const Modal = () => {
             value={donarEmail}
             onChange={(e)=> setDonarEmail(e.target.value)}
             />
-            <InputType labelText={'Quantity'} 
+            <InputType labelText={'Quantity (ML)'} 
             labelFor={'quantity'}
             InputType={Number}
             value={quantity}

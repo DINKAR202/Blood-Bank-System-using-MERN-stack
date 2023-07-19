@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const inventoryModel = require("../models/inventoryModel");
 const userModel = require("../models/userModel");
 
@@ -13,12 +14,33 @@ const createInventoryController = async (req, res) => {
     // if (inventoryType === "in" && user.role !== "donar") {
     //   throw new Error("Not a donor account");
     // }
-    if (inventoryType === "out" && user.role !== "hospital") {
-      throw new Error("Not a hospital");
+    // if (inventoryType === "out" && user.role !== "hospital") {
+    //   throw new Error("Not a hospital");
+    // }
+
+    if(req.body.inventoryType =="out"){
+      const requestedBloodGroup = req.body.bloodGroup
+      const requestedQuantityOfBlood = req.body.quantity
+      const organisation = new mongoose.Types.ObjectId(req.body.userId)
+      // calculate Blood Quantity
+      const totalInOfRequestedBlood = await inventoryModel.aggregate([
+        {$match:{
+          organisation,
+          inventoryType:'in',
+          bloodGroup:requestedBloodGroup
+        }},{
+          $group:{
+            _id:'$bloodGroup',
+            total:{$sum : '$quantity'}
+          }
+        }
+      ])
+      console.log('Total In', totalInOfRequestedBlood)
     }
+
     // save record
-    const inventory = new inventoryModel(req.body);
-    await inventory.save();
+    // const inventory = new inventoryModel(req.body);
+    // await inventory.save();
     return res.status(201).send({
       success: true,
       message: "New Blood record added",
