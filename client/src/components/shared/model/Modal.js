@@ -28,7 +28,9 @@ const Modal = () => {
       })
       if(data?.success){
         alert('New Record account');
-        // window.location.reload();
+        // window.location.reload();jsbdvhjdsmbv
+        sdkjfbvkdsjbxmv 
+        sdl,mbvjdmn
       }
     } catch (error) {
       // window.location.reload();
